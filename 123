@@ -1,0 +1,28 @@
+#include<stdio.h>  
+#include<time.h>
+
+int main()             {
+	FILE* file;
+	fopen_s(&file, "D:/1.txt", "r+");//???
+
+	char buffer[1024] = { 0 };
+	fread(buffer, sizeof(char), 1024, file);
+	printf_s('%s', buffer);
+	printf_s('\n');
+
+	time_t rawtime;
+	struct tm info;
+	time(&rawtime);
+	localtime_s(&info, &rawtime);
+
+	memset(buffer, '\0', 1024);
+	size_t len = strftime(buffer, 1024, "%Y-%m-%d %H:%M:%S\n", &info);
+	fwrite(buffer, sizeof(char), len, file);
+
+	fclose(file);
+
+	getchar();
+	return 0;
+
+
+}
